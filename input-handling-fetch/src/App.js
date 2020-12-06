@@ -1,11 +1,17 @@
-import './App.css';
+import React, { Component } from "react";
+import SearchBar from "./components/searchBar";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="app">
-     
-    </div>
-  );
+export default class App extends Component {
+  onFormSubmit(text) {
+    console.log("app", text);
+  }
+  render() {
+    return (
+      <div className="app">
+        <SearchBar onSubmitHandler={this.onFormSubmit} />
+      </div>
+    );
+  }
 }
-
-export default App;
