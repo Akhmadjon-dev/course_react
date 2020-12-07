@@ -23,6 +23,7 @@ export default class searchBar extends Component {
             style={{ width: "400px" }}
             value={this.state.text}
             onChange={this.inputHandler}
+            className="input"
             type="text"
           />
           <button style={{ display: "none" }}></button>
