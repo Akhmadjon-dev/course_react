@@ -17,6 +17,7 @@ export default class searchBar extends Component {
   render() {
     return (
       <div className="container mt-3">
+        <h3>Search bar</h3>
         <form onSubmit={this.submitHandler}>
           <input
             value={this.state.text}
