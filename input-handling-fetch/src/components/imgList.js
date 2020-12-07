@@ -1,17 +1,21 @@
 import React from "react";
+import Card from "./card";
+import "./style.css";
+class imgList extends React.Component {
+  // constructor(props) {
+  //   super(props);
+  // }
+  render() {
+    const { img } = this.props;
 
-const imgList = ({ img }) => {
-  const card = img.map((item) => (
-    <div key={item.id} className="card">
-      <img
-        alt={item.alt_description}
-        className="card-img-top"
-        src={item.urls.regular}
-      />
-    </div>
-  ));
-
-  return <div className="image">{card}</div>;
-};
+    return (
+      <div className="image">
+        {img.map((item) => (
+          <Card key={item.id} img={item} />
+        ))}
+      </div>
+    );
+  }
+}
 
 export default imgList;

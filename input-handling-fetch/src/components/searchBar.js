@@ -20,6 +20,7 @@ export default class searchBar extends Component {
         <h3>Search bar</h3>
         <form onSubmit={this.submitHandler}>
           <input
+            style={{ width: "400px" }}
             value={this.state.text}
             onChange={this.inputHandler}
             type="text"
