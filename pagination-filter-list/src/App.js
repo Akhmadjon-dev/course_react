@@ -84,8 +84,10 @@ export default class App extends Component {
     const { movies: allMovies, currentPage, pageSize } = this.state;
     const count = allMovies.length;
     const movies = paginate(allMovies, currentPage, pageSize);
+    if (count === 0) return <p>There is none movie.</p>;
     return (
       <div>
+        <h2>All movies in list {count} </h2>
         <Table responsive>
           <thead>
             <tr>
