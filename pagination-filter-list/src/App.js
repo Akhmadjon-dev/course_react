@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
 import { FcDislike, FcLike } from "react-icons/fc";
+import Pagination from "./components/Pagination/Pagination";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import { paginate } from "./utils/paginate";
 
 export default class App extends Component {
   state = {
+    currentPage: 1,
+    pageSize: 3,
     movies: [
       {
         id: 1,
@@ -59,6 +63,11 @@ export default class App extends Component {
     ],
   };
 
+  pageHandler = (page) => {
+    console.log(page);
+    this.setState({ currentPage: page });
+  };
+
   removeMovie = (id) => {
     const { movies } = this.state;
     const result = movies.filter((item) => item.id !== id);
@@ -73,8 +82,9 @@ export default class App extends Component {
   };
 
   render() {
-    const { movies } = this.state;
-
+    const { movies: allMovies, currentPage, pageSize } = this.state;
+    const count = allMovies.length;
+    const movies = paginate(allMovies, currentPage, pageSize);
     return (
       <div>
         <Table responsive>
@@ -118,6 +128,12 @@ export default class App extends Component {
             ))}
           </tbody>
         </Table>
+        <Pagination
+          onPageClick={this.pageHandler}
+          itemsCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+        />
       </div>
     );
   }
