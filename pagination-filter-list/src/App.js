@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
 import { FcDislike, FcLike } from "react-icons/fc";
 import Pagination from "./components/Pagination/Pagination";
-
+import { paginate } from "./utils/paginate";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import { paginate } from "./utils/paginate";
 
 export default class App extends Component {
   state = {
