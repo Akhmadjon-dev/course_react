@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button } from "react-bootstrap";
+import { FcDislike, FcLike } from "react-icons/fc";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -64,12 +65,11 @@ export default class App extends Component {
     this.setState({ movies: result });
   };
 
-  likeHandler = (id) => {
-    const { movies } = this.state;
-    const movie = movies.find((item) => item.id === id);
+  likeHandler = (movie) => {
+    const movies = [...this.state.movies];
     const index = movies.indexOf(movie);
-    const updated = movies.slice(index, 0);
-    console.log(updated);
+    movies[index] = { ...movie, like: !movie.like };
+    this.setState({ movies });
   };
 
   render() {
@@ -89,14 +89,30 @@ export default class App extends Component {
           </thead>
           <tbody>
             {movies.map((item) => (
-              <tr>
+              <tr key={item.id}>
                 <td>{item.title}</td>
                 <td>{item.genre}</td>
                 <td>{item.stroke}</td>
                 <td>{item.rate}</td>
-                <td>{item.like}</td>
                 <td>
-                  <Button variant="danger">Delete</Button>
+                  <div
+                    style={{ cursor: "pointer" }}
+                    onClick={() => {
+                      this.likeHandler(item);
+                    }}
+                  >
+                    {item.like ? <FcLike /> : <FcDislike />}
+                  </div>
+                </td>
+                <td>
+                  <Button
+                    onClick={() => {
+                      this.removeMovie(item.id);
+                    }}
+                    variant="danger"
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))}
