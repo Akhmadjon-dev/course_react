@@ -1,0 +1,51 @@
+const fakeMovies = [
+  {
+    id: 1,
+    title: "Baby driver ",
+    genre: "action",
+    stroke: 5,
+    like: true,
+    rate: 4.2,
+  },
+  {
+    id: 2,
+    title: "Trip to Italy",
+    genre: "comedy",
+    stroke: 7,
+    like: false,
+    rate: 4.9,
+  },
+  {
+    id: 3,
+    title: "Gone girl",
+    genre: "thriller",
+    stroke: 10,
+    like: false,
+    rate: 3.9,
+  },
+  {
+    id: 4,
+    title: "The Sixth Sense",
+    genre: "thriller",
+    stroke: 2,
+    like: false,
+    rate: 4.2,
+  },
+  {
+    id: 5,
+    title: "The Avangers",
+    genre: "action",
+    stroke: 74,
+    like: false,
+    rate: 4.6,
+  },
+  {
+    id: 6,
+    title: "Airplane",
+    genre: "comedy",
+    stroke: 4,
+    like: false,
+    rate: 3.6,
+  },
+];
+export default fakeMovies;
