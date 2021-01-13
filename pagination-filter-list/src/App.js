@@ -5,6 +5,7 @@ import Pagination from "./components/Pagination/Pagination";
 import { paginate } from "./utils/paginate";
 import fakeMovies from "./services/fakeMovies";
 import Filter from "./components/Filter/Filter";
+import _ from "lodash";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -12,58 +13,14 @@ export default class App extends Component {
   state = {
     currentPage: 1,
     pageSize: 3,
-    movies: [
-      {
-        id: 1,
-        title: "Baby driver ",
-        genre: "action",
-        stroke: 5,
-        like: true,
-        rate: 4.2,
-      },
-      {
-        id: 2,
-        title: "Trip to Italy",
-        genre: "comedy",
-        stroke: 7,
-        like: false,
-        rate: 4.9,
-      },
-      {
-        id: 3,
-        title: "Gone girl",
-        genre: "thriller",
-        stroke: 10,
-        like: false,
-        rate: 3.9,
-      },
-      {
-        id: 4,
-        title: "The Sixth Sense",
-        genre: "thriller",
-        stroke: 2,
-        like: false,
-        rate: 4.2,
-      },
-      {
-        id: 5,
-        title: "The Avangers",
-        genre: "action",
-        stroke: 74,
-        like: false,
-        rate: 4.6,
-      },
-      {
-        id: 6,
-        title: "Airplane",
-        genre: "comedy",
-        stroke: 4,
-        like: false,
-        rate: 3.6,
-      },
-    ],
+    sortColumn: { path: "title", order: "asc" },
+    movies: [],
+    selectedGenre: "",
   };
 
+  componentDidMount() {
+    this.setState({ movies: fakeMovies });
+  }
   pageHandler = (page) => {
     console.log(page);
     this.setState({ currentPage: page });
@@ -83,22 +40,37 @@ export default class App extends Component {
   };
 
   filterHandler = (genre) => {
-    const { movies } = this.state;
-    if (genre === "all") {
-      this.setState({
-        movies: fakeMovies,
-      });
-    } else {
-      const updated = fakeMovies.filter((item) => item.genre === genre.name);
-      this.setState({ movies: updated });
-    }
+    this.setState({ ...{ _id: "", title: "all" }, selectedGenre: genre });
+    // const { movies } = this.state;
+    // if (genre === "all") {
+    //   this.setState({
+    //     movies: fakeMovies,
+    //   });
+    // } else {
+    //   const updated = fakeMovies.filter((item) => item.genre === genre.name);
+    //   this.setState({ movies: updated, currentPage: 1 });
+    // }
     console.log(this.state.movies);
+  };
+  onSortColumn = (path) => {
+    this.setState({ sortColumn: { path, order: "asc" } });
   };
 
   render() {
-    const { movies: allMovies, currentPage, pageSize } = this.state;
+    const {
+      movies: allMovies,
+      currentPage,
+      selectedGenre,
+      sortColumn,
+      pageSize,
+    } = this.state;
     const count = allMovies.length;
-    const movies = paginate(allMovies, currentPage, pageSize);
+    const filtered =
+      selectedGenre && selectedGenre._id
+        ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+        : allMovies;
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order]);
+    const movies = paginate(sorted, currentPage, pageSize);
     if (count === 0) return <p>There is none movie.</p>;
     return (
       <div style={{ padding: "20px 15px" }}>
@@ -111,11 +83,11 @@ export default class App extends Component {
             <Table responsive>
               <thead>
                 <tr>
-                  <th>Title</th>
-                  <th>Genre</th>
-                  <th>Stroke</th>
-                  <th>Rating</th>
-                  <th>Like</th>
+                  <th onClick={() => this.onSortColumn("title")}>Title</th>
+                  <th onClick={() => this.onSortColumn("genre")}>Genre</th>
+                  <th onClick={() => this.onSortColumn("stroke")}>Stroke</th>
+                  <th onClick={() => this.onSortColumn("rate")}>Rating</th>
+                  <th onClick={() => this.onSortColumn("like")}>Like</th>
                 </tr>
               </thead>
               <tbody>

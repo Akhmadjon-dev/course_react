@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
 import { ListGroup } from 'react-bootstrap'
+import fakeGenres from '../../services/fakeGenres';
 
 export default class componentName extends Component {
     state = {
         genres: [
-            {
-                id: 1,
-                name: 'action'
-            },
-            {
-                id: 2,
-                name: 'thriller'
-            },
-            {
-                id: 3,
-                name: 'comedy'
-            },
+            
         ]
+    }
+    componentDidMount(){
+        this.setState({genres: fakeGenres})
     }
   render() {
       const {genres} = this.state;
