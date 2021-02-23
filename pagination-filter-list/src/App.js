@@ -8,6 +8,7 @@ import Filter from "./components/Filter/Filter";
 import _ from "lodash";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import MovieList from "./components/TableMovies/MovieList";
 
 export default class App extends Component {
   state = {
@@ -52,14 +53,7 @@ export default class App extends Component {
     }
     console.log(this.state.movies);
   };
-  onSortColumn = (path) => {
-    const sortColumn = { ...this.state.sortColumn };
-    if (sortColumn.path === path) {
-      sortColumn.order = sortColumn.order === "asc" ? "desc" : "asc";
-    } else {
-      sortColumn.path = path;
-      sortColumn.order = "asc";
-    }
+  onSortColumn = (sortColumn) => {
     this.setState({ sortColumn });
   };
 
@@ -93,47 +87,13 @@ export default class App extends Component {
             <Filter onListClick={this.filterHandler} />
           </Col>
           <Col lg={9} sm={7}>
-            <Table responsive>
-              <thead>
-                <tr>
-                  <th onClick={() => this.onSortColumn("title")}>Title</th>
-                  <th onClick={() => this.onSortColumn("genre")}>Genre</th>
-                  <th onClick={() => this.onSortColumn("stroke")}>Stroke</th>
-                  <th onClick={() => this.onSortColumn("rate")}>Rating</th>
-                  <th onClick={() => this.onSortColumn("like")}>Like</th>
-                </tr>
-              </thead>
-              <tbody>
-                {movies.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.title}</td>
-                    <td>{item.genre}</td>
-                    <td>{item.stroke}</td>
-                    <td>{item.rate}</td>
-                    <td>
-                      <div
-                        style={{ cursor: "pointer" }}
-                        onClick={() => {
-                          this.likeHandler(item);
-                        }}
-                      >
-                        {item.like ? <FcLike /> : <FcDislike />}
-                      </div>
-                    </td>
-                    <td>
-                      <Button
-                        onClick={() => {
-                          this.removeMovie(item.id);
-                        }}
-                        variant="danger"
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
+            <MovieList
+              onSort={this.onSortColumn}
+              sortColumn={sortColumn}
+              onDelete={this.removeMovie}
+              onLike={this.likeHandler}
+              movies={movies}
+            />
             <Pagination
               onPageClick={this.pageHandler}
               itemsCount={count}

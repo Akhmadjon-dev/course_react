@@ -2,6 +2,9 @@
 
 # dependencies
 /input-handling-fetch/node_modules
+/pagination-filter-list/node_modules
+/hooks/node_modules
+/videos-hooks/node_modules
 /node_modules
 /.pnp
 .pnp.js
